@@ -32,10 +32,11 @@ public class DynamicDataSourceAspect {
      * @throws Throwable
      */
     @Before("@annotation(dataSource)")
-    public void changeDataSource(JoinPoint point, DataSource dataSource) throws Throwable {
+    public void changeDataSource(JoinPoint point, DataSource dataSource) {
         String value = dataSource.value();
         if (dataSourceKeys.isEmpty()) {
             DynamicDataSourceKey.setDataSourceKey(DruidDataSourceConfigurationSet.DEFAULT_KEY);
+            return;
         }
         if (dataSourceKeys.contains(value)) {
             DynamicDataSourceKey.setDataSourceKey(value);
